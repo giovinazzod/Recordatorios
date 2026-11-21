@@ -6,9 +6,9 @@ import com.example.recordatorios.model.Prioridad
 import com.example.recordatorios.model.EstadoRecordatorio
 
 object DatosSimulados {
-    val estudio = Categoria(1, "Estudio")
-    val trabajo = Categoria(2, "Trabajo")
-    val personal = Categoria(3, "Personal")
+    val estudio = Categoria.Estudio
+    val trabajo = Categoria.Trabajo
+    val personal = Categoria.Personal
 
     val recordatorios: List<Recordatorio> = listOf(
         Recordatorio(
