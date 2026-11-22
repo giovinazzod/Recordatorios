@@ -42,14 +42,14 @@ fun PantallaCreacion(
     modifier: Modifier = Modifier,
     guardando: Boolean = false
 ) {
-    // 1. Estados locales del formulario
+    // Estados locales para controlar los campos del formulario
     var titulo by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
     var categoriaSeleccionada by remember { mutableStateOf(Categoria.todas.firstOrNull()) }
     var prioridadSeleccionada by remember { mutableStateOf<Prioridad?>(Prioridad.Media) }
     var tituloTocado by remember { mutableStateOf(false) }
 
-    // 2. Lógica de validación
+    // Reglas de validación: título >= 4 caracteres y descripción <= 200
     val tituloLimpio = titulo.trim()
     val errorTitulo = when {
         tituloTocado && tituloLimpio.isEmpty() -> "El título no puede estar vacío"
@@ -93,7 +93,7 @@ fun PantallaCreacion(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Campo Título
+            // Título
             OutlinedTextField(
                 value = titulo,
                 onValueChange = {
@@ -115,7 +115,7 @@ fun PantallaCreacion(
                     }
             )
 
-            // Campo Descripción
+            // Descripción
             OutlinedTextField(
                 value = descripcion,
                 onValueChange = { descripcion = it },

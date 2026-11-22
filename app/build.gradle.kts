@@ -51,13 +51,13 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.8.0")
 
-    // ViewModel y ciclo de vida en Compose (Módulo 2)
+    // Integración de ViewModel y ciclo de vida con Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
 
     // Navigation Compose para conectar pantallas
     implementation("androidx.navigation:navigation-compose:2.8.5")
 
-    // Íconos extendidos de Material (opcional pero muy útil para botones de agregar, volver, etc.)
+    // Íconos de Material Design para botones de acción y navegación
     implementation("androidx.compose.material:material-icons-extended")
 }

@@ -136,7 +136,7 @@ fun PantallaDetalle(
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
 
-                        // Descripción (o indicación de que no posee)
+                        // Descripción
                         Text(
                             text = "Descripción:",
                             style = MaterialTheme.typography.titleSmall
@@ -157,7 +157,7 @@ fun PantallaDetalle(
                     }
                 }
             } else {
-                // Caso en que el ID recibido no corresponda a ningún registro
+                // Si el ID recibido no corresponda a ningún registro
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
