@@ -60,4 +60,7 @@ dependencies {
 
     // Íconos de Material Design para botones de acción y navegación
     implementation("androidx.compose.material:material-icons-extended")
+
+    // Preferences DataStore para configuraciones clave-valor
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }

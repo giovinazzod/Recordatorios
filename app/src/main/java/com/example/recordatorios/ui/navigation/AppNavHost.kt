@@ -36,9 +36,14 @@ fun AppNavHost(
         // Destino principal: lista de recordatorios
         composable(route = "listado") {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val prefs by viewModel.preferencias.collectAsStateWithLifecycle()
 
             PantallaListado(
                 estado = uiState,
+                preferencias = prefs,
+                onTemaOscuroChange = { viewModel.setTemaOscuro(it) },
+                onOrdenarPrioridadChange = { viewModel.setOrdenarPorPrioridad(it) },
+                onOcultarCompletadosChange = { viewModel.setOcultarCompletados(it) },
                 onCrearClick = { navController.navigate("creacion") },
                 onRecordatorioClick = { id -> navController.navigate("detalle/$id") },
                 onReintentar = { viewModel.recargar() },
