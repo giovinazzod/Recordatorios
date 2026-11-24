@@ -6,6 +6,7 @@ sealed class Prioridad(val etiqueta: String) {
     object Baja : Prioridad("Baja")
 
     companion object {
-        val todas: List<Prioridad> = listOf(Alta, Media, Baja)
+        val todas: List<Prioridad>
+            get() = listOf(Alta, Media, Baja)
     }
 }
