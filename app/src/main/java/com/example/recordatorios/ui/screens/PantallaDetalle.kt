@@ -27,14 +27,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.recordatorios.model.Recordatorio
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaDetalle(
     recordatorio: Recordatorio?,
     onVolver: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEliminar: () -> Unit
 ) {
+    var mostrarConfirmacion by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -156,6 +165,12 @@ fun PantallaDetalle(
                         )
                     }
                 }
+                Button(
+                    onClick = { mostrarConfirmacion = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Eliminar recordatorio")
+                }
             } else {
                 // Si el ID recibido no corresponda a ningún registro
                 Column(
@@ -174,5 +189,29 @@ fun PantallaDetalle(
                 }
             }
         }
+    }
+    if (mostrarConfirmacion && recordatorio != null) {
+        AlertDialog(
+            onDismissRequest = { mostrarConfirmacion = false },
+            title = { Text("Eliminar recordatorio") },
+            text = { Text("¿Querés eliminar \"${recordatorio.titulo}\"?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        mostrarConfirmacion = false
+                        onEliminar()
+                    }
+                ) {
+                    Text("Eliminar")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { mostrarConfirmacion = false }
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }

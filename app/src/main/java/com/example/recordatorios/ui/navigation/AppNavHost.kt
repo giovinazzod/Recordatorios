@@ -92,7 +92,14 @@ fun AppNavHost(
 
             PantallaDetalle(
                 recordatorio = recordatorio,
-                onVolver = { navController.popBackStack() }
+                onVolver = { navController.popBackStack() },
+                onEliminar = {
+                    recordatorio?.let { seleccionado ->
+                        viewModel.eliminarRecordatorio(seleccionado) {
+                            navController.popBackStack()
+                        }
+                    }
+                }
             )
         }
     }

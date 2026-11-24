@@ -112,9 +112,7 @@ class RecordatoriosViewModel(
     fun simularVacio() = cargarRecordatorios(simularVacio = true)
     fun simularError() = cargarRecordatorios(simularError = true)
 
-    /**
-     * Guarda un nuevo recordatorio mediante el repositorio y notifica el éxito.
-     */
+    // Guarda un nuevo recordatorio mediante el repositorio y notifica el éxito.
     fun guardarRecordatorio(
         titulo: String,
         descripcion: String,
@@ -140,10 +138,19 @@ class RecordatoriosViewModel(
         }
     }
 
-    /**
-     * Busca un recordatorio por su identificador para la pantalla de detalle.
-     */
+    // Busca un recordatorio por su identificador para la pantalla de detalle.
     suspend fun obtenerRecordatorioPorId(id: Int): Recordatorio? {
         return repositorio.obtenerPorId(id)
+    }
+
+    // Eliminar recordatorio
+    fun eliminarRecordatorio(
+        recordatorio: Recordatorio,
+        onExito: () -> Unit
+    ) {
+        viewModelScope.launch {
+            repositorio.eliminar(recordatorio)
+            onExito()
+        }
     }
 }
