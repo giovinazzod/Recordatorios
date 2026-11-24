@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.recordatorios.model.Categoria
 import com.example.recordatorios.model.Prioridad
+import com.example.recordatorios.model.Recordatorio
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,13 +41,22 @@ fun PantallaCreacion(
     onGuardar: (titulo: String, descripcion: String, categoria: Categoria, prioridad: Prioridad) -> Unit,
     onCancelar: () -> Unit,
     modifier: Modifier = Modifier,
-    guardando: Boolean = false
+    guardando: Boolean = false,
+    recordatorioInicial: Recordatorio? = null
 ) {
     // Estados locales para controlar los campos del formulario
-    var titulo by remember { mutableStateOf("") }
-    var descripcion by remember { mutableStateOf("") }
-    var categoriaSeleccionada by remember { mutableStateOf(Categoria.todas.firstOrNull()) }
-    var prioridadSeleccionada by remember { mutableStateOf<Prioridad?>(Prioridad.Media) }
+    var titulo by remember(recordatorioInicial?.id) {
+        mutableStateOf(recordatorioInicial?.titulo ?: "")
+    }
+    var descripcion by remember(recordatorioInicial?.id) {
+        mutableStateOf(recordatorioInicial?.descripcion.orEmpty())
+    }
+    var categoriaSeleccionada by remember(recordatorioInicial?.id) {
+        mutableStateOf(recordatorioInicial?.categoria ?: Categoria.todas.firstOrNull())
+    }
+    var prioridadSeleccionada by remember(recordatorioInicial?.id) {
+        mutableStateOf<Prioridad?>(recordatorioInicial?.prioridad ?: Prioridad.Media)
+    }
     var tituloTocado by remember { mutableStateOf(false) }
 
     // Reglas de validación: título >= 4 caracteres y descripción <= 200
@@ -69,7 +79,15 @@ fun PantallaCreacion(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text("Nuevo Recordatorio") },
+                title = {
+                    Text(
+                        if (recordatorioInicial == null) {
+                            "Nuevo Recordatorio"
+                        } else {
+                            "Editar recordatorio"
+                        }
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onCancelar) {
                         Icon(
@@ -187,7 +205,13 @@ fun PantallaCreacion(
                     modifier = Modifier.weight(1f),
                     enabled = esFormularioValido && !guardando
                 ) {
-                    Text(if (guardando) "Guardando..." else "Guardar")
+                    Text(
+                        when {
+                            guardando -> "Guardando..."
+                            recordatorioInicial != null -> "Guardar cambios"
+                            else -> "Guardar"
+                        }
+                    )
                 }
             }
         }

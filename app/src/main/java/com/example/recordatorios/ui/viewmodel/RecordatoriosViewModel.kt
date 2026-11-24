@@ -143,6 +143,28 @@ class RecordatoriosViewModel(
         return repositorio.obtenerPorId(id)
     }
 
+    // Actualizar un recordatorio
+    fun actualizarRecordatorio(
+        original: Recordatorio,
+        titulo: String,
+        descripcion: String,
+        categoria: Categoria,
+        prioridad: Prioridad,
+        onExito: () -> Unit
+    ) {
+        viewModelScope.launch {
+            repositorio.guardar(
+                original.copy(
+                    titulo = titulo,
+                    descripcion = descripcion.ifBlank { null },
+                    categoria = categoria,
+                    prioridad = prioridad
+                )
+            )
+            onExito()
+        }
+    }
+
     // Eliminar recordatorio
     fun eliminarRecordatorio(
         recordatorio: Recordatorio,

@@ -40,7 +40,8 @@ fun PantallaDetalle(
     recordatorio: Recordatorio?,
     onVolver: () -> Unit,
     modifier: Modifier = Modifier,
-    onEliminar: () -> Unit
+    onEliminar: () -> Unit,
+    onEditar: () -> Unit,
 ) {
     var mostrarConfirmacion by remember { mutableStateOf(false) }
 
@@ -170,6 +171,12 @@ fun PantallaDetalle(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Eliminar recordatorio")
+                }
+                Button(
+                    onClick = onEditar,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Editar recordatorio")
                 }
             } else {
                 // Si el ID recibido no corresponda a ningún registro

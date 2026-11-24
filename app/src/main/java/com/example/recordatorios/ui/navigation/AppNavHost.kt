@@ -1,5 +1,6 @@
 package com.example.recordatorios.ui.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -99,8 +100,70 @@ fun AppNavHost(
                             navController.popBackStack()
                         }
                     }
+                },
+                onEditar = {
+                    navController.navigate("edicion/$recordatorioId")
                 }
             )
+        }
+
+        composable(
+            route = "edicion/{id}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val recordatorioId = backStackEntry.arguments?.getInt("id") ?: 0
+
+            var original by remember(recordatorioId) {
+                mutableStateOf<Recordatorio?>(null)
+            }
+            var cargando by remember(recordatorioId) {
+                mutableStateOf(true)
+            }
+
+            LaunchedEffect(recordatorioId) {
+                original = viewModel.obtenerRecordatorioPorId(recordatorioId)
+                cargando = false
+            }
+
+            val guardando by viewModel.guardando.collectAsStateWithLifecycle()
+
+            when {
+                cargando -> {
+                    Text("Cargando recordatorio...")
+                }
+
+                original != null -> {
+                    original?.let { existente ->
+                        PantallaCreacion(
+                            recordatorioInicial = existente,
+                            guardando = guardando,
+                            onCancelar = {
+                                navController.popBackStack()
+                            },
+                            onGuardar = { titulo, descripcion, categoria, prioridad ->
+                                viewModel.actualizarRecordatorio(
+                                    original = existente,
+                                    titulo = titulo,
+                                    descripcion = descripcion,
+                                    categoria = categoria,
+                                    prioridad = prioridad
+                                ) {
+                                    navController.popBackStack(
+                                        route = "listado",
+                                        inclusive = false
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
+
+                else -> {
+                    Text("No se encontró el recordatorio solicitado.")
+                }
+            }
         }
     }
 }
