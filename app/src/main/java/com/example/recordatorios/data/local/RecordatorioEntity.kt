@@ -8,7 +8,7 @@ import com.example.recordatorios.model.Categoria
 import com.example.recordatorios.model.EstadoRecordatorio
 import com.example.recordatorios.model.Prioridad
 
-// Estado de sincronizacion de cada registro para la estrategia local-first
+// Estado de sincronización de cada registro para la estrategia local-first
 enum class SyncStatus {
     SYNCED,
     PENDING,

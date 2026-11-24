@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecordatorioDao {
 
-    // Emite el listado completo cada vez que la tabla sufre modificaciones
+    // Muestra el listado completo cada vez que la tabla sufre modificaciones
     @Query("SELECT * FROM recordatorios ORDER BY id DESC")
     fun observarTodos(): Flow<List<RecordatorioEntity>>
 
-    // Permite observar un registro individual en tiempo real
+    // Permite observar un registro individual
     @Query("SELECT * FROM recordatorios WHERE id = :id")
     fun observarPorId(id: Int): Flow<RecordatorioEntity?>
 
