@@ -127,9 +127,8 @@ class RecordatoriosViewModel(
 
         viewModelScope.launch {
             delay(500)
-            val nuevoId = repositorio.generarNuevoId()
             val nuevo = Recordatorio(
-                id = nuevoId,
+                id = 0,
                 titulo = titulo,
                 categoria = categoria,
                 prioridad = prioridad,

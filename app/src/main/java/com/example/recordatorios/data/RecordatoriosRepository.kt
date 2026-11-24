@@ -10,5 +10,5 @@ interface RecordatoriosRepository {
 
     suspend fun guardar(recordatorio: Recordatorio)
 
-    fun generarNuevoId(): Int
+    suspend fun eliminar(recordatorio: Recordatorio)
 }

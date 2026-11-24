@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -63,4 +64,9 @@ dependencies {
 
     // Preferences DataStore para configuraciones clave-valor
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // Persistencia local con Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }

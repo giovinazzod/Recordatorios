@@ -36,11 +36,11 @@ class RecordatoriosEnMemoriaRepository(
         }
     }
 
-    fun establecerRecordatorios(lista: List<Recordatorio>) {
-        recordatorios.value = lista
+    override suspend fun eliminar(recordatorio: Recordatorio) {
+        recordatorios.update { actuales -> actuales.filterNot { it.id == recordatorio.id } }
     }
 
-    override fun generarNuevoId(): Int {
-        return (recordatorios.value.maxOfOrNull { it.id } ?: 0) + 1
+    fun establecerRecordatorios(lista: List<Recordatorio>) {
+        recordatorios.value = lista
     }
 }

@@ -9,8 +9,8 @@ data class Recordatorio(
     val descripcion: String? = null
 ) {
     init {
-        require(id > 0) {
-            "El identificador debe ser mayor que cero."
+        require(id >= 0) {
+            "El identificador no puede ser negativo."
         }
         require(titulo.isNotBlank()) {
             "El título no puede estar vacío."
